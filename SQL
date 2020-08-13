@@ -1,0 +1,26 @@
+SELECT DISTINCT t1.nameclient
+  FROM client t1, contract t2
+ WHERE t1.id_client = t2.id_client
+   and t2.stat = 1;
+   
+SELECT DISTINCT t1.nameclient
+  FROM client t1, contract t2
+ WHERE t1.id_client = t2.id_client
+GROUP BY t2.type_id, t2.id_client
+HAVING COUNT(*) > 3;
+
+SELECT type_id, COUNT(DISTINCT id_client) as cnt
+  FROM contract
+ WHERE stat = 1
+GROUP BY type_id;
+
+SELECT type_id, stat, COUNT(id_contract) as cnt
+  FROM contract
+ WHERE descr IS NULL
+GROUP BY type_id, stat;
+ 
+ SELECT t1.nameclient, t2.number, t2.stat, t2.value_contract, (sum(t3.value_commission)/t2.value_contract)*100 as tax_calc
+   FROM client t1, contract t2, commission t3
+  WHERE t1.id_client = t2.id_client
+    and t2.id_contract = t3.id_contract
+ GROUP BY t2.id_contract;
